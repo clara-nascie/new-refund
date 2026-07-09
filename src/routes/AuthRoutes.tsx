@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router';
 import { AuthLayout } from '../components/AuthLayout';
 import { SignIn } from '../pages/signIn';
 import { SignUp } from '../pages/signUp';
+import { NotFound } from '../pages/notFound';
 
 
 export function AuthRoutes() {
@@ -14,6 +15,7 @@ export function AuthRoutes() {
                 <Route path="/" element={<SignIn />} />
                 <Route path="signUp" element={<SignUp />} />
             </Route>
+            <Route path="*" element={<NotFound />} />
         </Routes>
     );
 }
