@@ -1,6 +1,8 @@
+import { Routes } from "./routes"
 
+//aqui importamos as rotas
 export function App() {
   return (
-    <h1 className="">App</h1>
+    <Routes />
   )
 }
