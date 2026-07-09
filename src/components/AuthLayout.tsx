@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import logoIcon from "../assets/logo-icon/logoIcon.svg";
+import logoIcon from "../assets/logo-icon/logo-Icon.svg";
 
 //serve para deixar layout padrão para todas as telas de auth
 export function AuthLayout() {

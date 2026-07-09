@@ -8,7 +8,7 @@ import { EmployeeRoutes } from './EmployeeRoutes';
 export function Routes(){
     // Altere para `true` para testar as rotas de funcionário logado (Refund)
     // Altere para `false` para testar as rotas de autenticação (Login / Cadastro)
-    const isLogged = false; 
+    const isLogged = true; 
 
     return (
         <BrowserRouter>
