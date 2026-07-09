@@ -2,12 +2,17 @@
 
 import { BrowserRouter } from 'react-router';
 import { AuthRoutes } from './AuthRoutes';
+import { EmployeeRoutes } from './EmployeeRoutes';
 
 //serve para criar as rotas da aplicação, importando outras rotas
 export function Routes(){
+    // Altere para `true` para testar as rotas de funcionário logado (Refund)
+    // Altere para `false` para testar as rotas de autenticação (Login / Cadastro)
+    const isLogged = false; 
+
     return (
         <BrowserRouter>
-            <AuthRoutes />
+            {isLogged ? <EmployeeRoutes /> : <AuthRoutes />}
         </BrowserRouter>
     );
 }
