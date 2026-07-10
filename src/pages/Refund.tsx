@@ -1,6 +1,7 @@
 import { Input } from "../components/Input";
 import { Select } from "@/components/Select";
 import { CATEGORIES_OPTIONS } from "../utils/categories";
+import { Upload } from "@/components/upload";
 
 export function Refund() {
   return (
@@ -38,6 +39,7 @@ export function Refund() {
           type="number"
         />
       </div>
+      <Upload/>
     </form>
   );
 }
