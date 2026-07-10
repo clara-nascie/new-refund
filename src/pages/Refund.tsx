@@ -22,14 +22,22 @@ export function Refund() {
         placeholder="Descrição da despesa"
         type="text"
       />
+      <div className="flex gap-4">
+        <Select required legend="Categoria da despesa">
+          {CATEGORIES_OPTIONS.map((category) => (
+            <option key={category.name} value={category.name}>
+              {category.name}
+            </option>
+          ))}
+        </Select>
 
-      <Select required legend="Categoria da despesa">
-        {CATEGORIES_OPTIONS.map((category) => (
-          <option key={category.name} value={category.name}>
-            {category.name}
-          </option>
-        ))}
-      </Select>
+        <Input
+          required
+          legend="Valor da despesa"
+          placeholder="R$ 0,00"
+          type="number"
+        />
+      </div>
     </form>
   );
 }
