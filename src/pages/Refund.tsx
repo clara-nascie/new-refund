@@ -4,12 +4,22 @@ import { Select } from "@/components/Select";
 import { CATEGORIES_OPTIONS } from "../utils/categories";
 import { Upload } from "@/components/upload";
 import { Button } from "@/components/Button";
+import { useNavigate } from "react-router";
 
 export function Refund() {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [value, setValue] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  
+  const navigate = useNavigate();
+
+  //serve para criar um objeto com os dados do formulário
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log({ name, category, value, file });
+    navigate("/confirm", {state: {fromSubmit: true}});
+  }
 
   // Formata o número para o padrão de moeda Real (R$ 0,00)
   function formatCurrency(rawValue: string) {
@@ -31,11 +41,6 @@ export function Refund() {
     setValue(formatCurrency(e.target.value));
   }
 
-  //serve para criar um objeto com os dados do formulário
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    console.log({ name, category, value, file });
-  }
 
   return (
     <form
