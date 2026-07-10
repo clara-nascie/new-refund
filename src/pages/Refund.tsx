@@ -1,11 +1,45 @@
+import { useState } from "react";
 import { Input } from "../components/Input";
 import { Select } from "@/components/Select";
 import { CATEGORIES_OPTIONS } from "../utils/categories";
 import { Upload } from "@/components/upload";
+import { Button } from "@/components/Button";
 
 export function Refund() {
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [value, setValue] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+
+  // Formata o número para o padrão de moeda Real (R$ 0,00)
+  function formatCurrency(rawValue: string) {
+    const cleanValue = rawValue.replace(/\D/g, "");
+
+    if (!cleanValue) {
+      return "";
+    }
+
+    const cents = Number(cleanValue) / 100;
+
+    return cents.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  }
+
+  function handleValueChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setValue(formatCurrency(e.target.value));
+  }
+
+  //serve para criar um objeto com os dados do formulário
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log({ name, category, value, file });
+  }
+
   return (
     <form
+      onSubmit={onSubmit}
       className="bg-gray-500 w-full rounded-xl flex flex-col p-10 gap-6
     lg:min-w-[512px]"
     >
@@ -22,9 +56,16 @@ export function Refund() {
         legend={"Nome da solicitação"}
         placeholder="Descrição da despesa"
         type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
       <div className="flex gap-4">
-        <Select required legend="Categoria da despesa">
+        <Select
+          required
+          legend="Categoria da despesa"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
           {CATEGORIES_OPTIONS.map((category) => (
             <option key={category.name} value={category.name}>
               {category.name}
@@ -36,10 +77,18 @@ export function Refund() {
           required
           legend="Valor da despesa"
           placeholder="R$ 0,00"
-          type="number"
+          type="text"
+          value={value}
+          onChange={handleValueChange}
         />
       </div>
-      <Upload/>
+      <Upload
+        fileName={file?.name}
+        onChange={(e) => setFile(e.target.files?.[0] || null)}
+      />
+      <Button type="submit">
+        Enviar Solicitação
+      </Button>
     </form>
   );
 }
