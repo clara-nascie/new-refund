@@ -1,4 +1,5 @@
 import { Input } from "../components/Input";
+import { Select } from "@/components/Select";
 
 export function Refund() {
   return (
@@ -20,6 +21,13 @@ export function Refund() {
         placeholder="Descrição da despesa"
         type="text"
       />
+
+      <Select required legend="Categoria da despesa">
+        <option value="lodging">Hospedagem</option>
+        <option value="food">Alimentação</option>
+        <option value="transport">Transporte</option>
+        <option value="others">Outros</option>
+      </Select>
     </form>
   );
 }

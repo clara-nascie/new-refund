@@ -17,5 +17,10 @@
   --text-xxs: 0.625rem;
 }
 
-
+select {
+  appearance: none;
+  background-image: url("./assets/icons/CaretDown.svg");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+}
 
