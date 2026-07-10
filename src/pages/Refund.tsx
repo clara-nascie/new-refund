@@ -1,5 +1,6 @@
 import { Input } from "../components/Input";
 import { Select } from "@/components/Select";
+import { CATEGORIES_OPTIONS } from "../utils/categories";
 
 export function Refund() {
   return (
@@ -23,10 +24,11 @@ export function Refund() {
       />
 
       <Select required legend="Categoria da despesa">
-        <option value="lodging">Hospedagem</option>
-        <option value="food">Alimentação</option>
-        <option value="transport">Transporte</option>
-        <option value="others">Outros</option>
+        {CATEGORIES_OPTIONS.map((category) => (
+          <option key={category.name} value={category.name}>
+            {category.name}
+          </option>
+        ))}
       </Select>
     </form>
   );
