@@ -5,6 +5,7 @@ import { CATEGORIES_OPTIONS } from "../utils/categories";
 import { Upload } from "@/components/upload";
 import { Button } from "@/components/Button";
 import { useNavigate } from "react-router";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 export function Refund() {
   const [name, setName] = useState("");
@@ -13,6 +14,16 @@ export function Refund() {
   const [file, setFile] = useState<File | null>(null);
 
   const navigate = useNavigate();
+
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cleanValue = e.target.value.replace(/\D/g, "");
+    if (!cleanValue) {
+      setValue("");
+      return;
+    }
+    const numberValue = Number(cleanValue) / 100;
+    setValue(formatCurrency(numberValue));
+  };
 
   //serve para criar um objeto com os dados do formulário
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -63,6 +74,7 @@ export function Refund() {
           placeholder="R$ 0,00"
           type="text"
           value={value}
+          onChange={handleValueChange}
         />
       </div>
       <Upload

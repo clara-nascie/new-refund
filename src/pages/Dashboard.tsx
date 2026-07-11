@@ -5,6 +5,7 @@ import { useState } from "react";
 import { RefundItem } from "@/components/RefundItem";
 import { CATEGORIES } from "@/utils/categories"
 import { formatCurrency } from "@/utils/formatCurrency"
+import { Pagination } from "@/components/Pagination";
 
 const REFUND_EXAMPLE = {
   id: "123",
@@ -42,6 +43,10 @@ export function Dashboard() {
       overflow-y-scroll">
         <RefundItem data={REFUND_EXAMPLE} />
       </div>
+      <Pagination
+        current={1}
+        total={10}
+      />
     </div>
   );
 }
