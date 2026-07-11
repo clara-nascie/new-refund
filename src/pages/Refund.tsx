@@ -7,6 +7,7 @@ import { Button } from "@/components/Button";
 import { useNavigate, useParams } from "react-router";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { type RefundItemProps } from "@/components/RefundItem";
+import fileSvg from "@/assets/icons/file.svg"
 
 const REFUND_EXAMPLE = {
   id: "123",
@@ -142,11 +143,20 @@ export function Refund() {
           disabled={!!params.id}
         />
       </div>
-      <Upload
-        fileName={file?.name}
-        onChange={(e) => setFile(e.target.files?.[0] || null)}
-        
-      />
+
+      {params.id ? (
+        <a href="https://www.google.com" target="black"
+        className="text-sm text-green-100 font-semibold flex items-center
+        justify-center gap-2 my-6 hover:opacity-70 transition ease-linear ">
+          <img src={fileSvg} alt="Comprovante" />
+          abrir comprovante
+        </a>
+      ) : (
+        <Upload
+          fileName={file?.name}
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+        />
+      )}
       <Button type="submit">
         {params.id ? "Atualizar solicitação" : "Enviar solicitação"}
       </Button>
