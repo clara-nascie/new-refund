@@ -11,36 +11,15 @@ export function Refund() {
   const [category, setCategory] = useState("");
   const [value, setValue] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  
+
   const navigate = useNavigate();
 
   //serve para criar um objeto com os dados do formulário
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log({ name, category, value, file });
-    navigate("/confirm", {state: {fromSubmit: true}});
+    navigate("/confirm", { state: { fromSubmit: true } });
   }
-
-  // Formata o número para o padrão de moeda Real (R$ 0,00)
-  function formatCurrency(rawValue: string) {
-    const cleanValue = rawValue.replace(/\D/g, "");
-
-    if (!cleanValue) {
-      return "";
-    }
-
-    const cents = Number(cleanValue) / 100;
-
-    return cents.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
-  }
-
-  function handleValueChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setValue(formatCurrency(e.target.value));
-  }
-
 
   return (
     <form
@@ -84,16 +63,13 @@ export function Refund() {
           placeholder="R$ 0,00"
           type="text"
           value={value}
-          onChange={handleValueChange}
         />
       </div>
       <Upload
         fileName={file?.name}
         onChange={(e) => setFile(e.target.files?.[0] || null)}
       />
-      <Button type="submit">
-        Enviar Solicitação
-      </Button>
+      <Button type="submit">Enviar Solicitação</Button>
     </form>
   );
 }

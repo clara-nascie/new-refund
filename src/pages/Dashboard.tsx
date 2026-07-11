@@ -4,12 +4,13 @@ import searchIcon from "@/assets/icons/search.svg";
 import { useState } from "react";
 import { RefundItem } from "@/components/RefundItem";
 import { CATEGORIES } from "@/utils/categories"
+import { formatCurrency } from "@/utils/formatCurrency"
 
 const REFUND_EXAMPLE = {
   id: "123",
   name: "Clara",
   category: "Alimentação",
-  amount: "25.00",
+  amount: formatCurrency(25.00),
   categoryImg: CATEGORIES["food"].icon
 }
 
