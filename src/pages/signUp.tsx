@@ -1,22 +1,26 @@
-import { useState, type SubmitEvent } from "react";
-import { z, ZodError } from "zod";
+import { useState } from "react";
+import { z } from "zod";
+import { useNavigate } from "react-router";
+import { AxiosError } from "axios";
+
+import { api } from "../services/api";
 
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
 
-const signupSchema = z.object({
-  name: z.string().trim().min(3, "O nome deve ter pelo menos 3 caracteres"),
-  email: z.string().trim().toLowerCase().email("Email inválido"),
-  password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
-  confirmPassword: z
-    .string()
-    .min(6, "A senha deve ter pelo menos 6 caracteres"),
-  //refine é usado para validações personalizadas
-  //ele verifica se a senha é igual a confirmação de senha
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "As senhas não coincidem",
-  path: ["confirmPassword"],
-});
+//Validação de dados com Zod
+const signupSchema = z
+  .object({
+    name: z.string().trim().min(3, "O nome deve ter pelo menos 3 caracteres"),
+    email: z.string().trim().toLowerCase().email("Email inválido"),
+    password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+    confirmPassword: z.string(),
+  })
+  //comparação entre senha e confirmação de senha
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "As senhas não coincidem",
+    path: ["confirmPassword"],
+  });
 
 export function SignUp() {
   const [name, setName] = useState("");
@@ -25,8 +29,10 @@ export function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   //Validação de dados antes de enviar para o backend
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     try {
@@ -38,9 +44,24 @@ export function SignUp() {
         password,
         confirmPassword,
       });
+
+      //envia os dados do user para o backend
+      await api.post("/users", data);
+
+      //confirma o cadastro e pergunta se deseja fazer login
+      if (confirm("Usuário cadastrado com sucesso! Deseja fazer login?")) {
+        navigate("/");
+      }
+      //serve para capturar os erros que vieram do backend
     } catch (error) {
+      console.log(error)
       if (error instanceof z.ZodError) {
         return alert(error.issues[0].message);
+      }
+
+      //se houver um erro do axios
+      if (error instanceof AxiosError){
+        return alert (error.response?.data.message)
       }
 
       alert("Ocorreu um erro inesperado, tente novamente!");
