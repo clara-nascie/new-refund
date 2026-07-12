@@ -9,12 +9,10 @@ import { AuthRoutes } from "./AuthRoutes";
 import { EmployeeRoutes } from "./EmployeeRoutes";
 import { ManagerRoutes } from "./ManagerRoutes";
 
-const isLoading = false;
 
 export function Routes() {
-  const {session} = useAuth();
+  const {session, isLoading} = useAuth();
 
- 
   //serve para direcionar o usuário para a rota correta dependendo do tipo de usuário
   function Route() {
     switch (session?.user?.role) {

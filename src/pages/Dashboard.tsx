@@ -7,26 +7,11 @@ import { CATEGORIES } from "@/utils/categories"
 import { formatCurrency } from "@/utils/formatCurrency"
 import { Pagination } from "@/components/Pagination";
 
-const REFUND_EXAMPLE = {
-  id: "123",
-  name: "Clara",
-  category: "Alimentação",
-  amount: formatCurrency(25.00),
-  categoryImg: CATEGORIES["food"].icon
-}
-
 export function Dashboard() {
   const [name, setName] = useState("");
   const [page, setPage] = useState(1);
   const [totalOfPages] = useState(10);
-  const [refunds] = useState<RefundItemProps[]>(() => {
-    const stored = localStorage.getItem("refunds");
-    if (stored) {
-      return JSON.parse(stored);
-    }
-    localStorage.setItem("refunds", JSON.stringify([REFUND_EXAMPLE]));
-    return [REFUND_EXAMPLE];
-  });
+  const [refunds, setRefunds] = useState<RefundItemProps[]>([]);
 
   function FetchRefunds(e: React.FormEvent) {
     e.preventDefault();
