@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, ReactNode } from "react";
 import { useState, useEffect } from "react";
-import { api } from "@/services/api";
+import { api } from "../services/api";
 
 //serve para criar um container que vai guardar a informação do usuário
 type AuthContext = {
@@ -28,6 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     );
     localStorage.setItem(`${LOCAL_STORAGE_KEY}:token`, data.token);
 
+    //passa o token para a api
     api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
     setSession(data);
@@ -40,13 +41,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     //se tiver usuário e token, salva na sessão
     if (user && token) {
-      try {
-        const parsedUser = JSON.parse(user);
-        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        setSession({ user: parsedUser, token });
-      } catch (error) {
-        console.error("Erro ao ler o localStorage:", error);
-      }
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      setSession({ user: JSON.parse(user), token });
     }
 
     setIsLoading(false);

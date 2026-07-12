@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router";
+import { z } from "zod";
+import { AxiosError } from "axios";
+
+import { api } from "@/services/api";
+import fileSvg from "@/assets/icons/file.svg";
+import { CATEGORIES_OPTIONS, CATEGORIES } from "../utils/categories";
+
 import { Input } from "../components/Input";
 import { Select } from "@/components/Select";
-import { CATEGORIES_OPTIONS, CATEGORIES } from "../utils/categories";
 import { Upload } from "@/components/upload";
 import { Button } from "@/components/Button";
-import { useNavigate, useParams } from "react-router";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { type RefundItemProps } from "@/components/RefundItem";
-import fileSvg from "@/assets/icons/file.svg";
-import { z } from "zod";
+
+
 
 const refundSchema = z.object({
   name: z.string().min(3, { message: "informe um nome claro para a despesa" }),
@@ -33,7 +39,7 @@ export function Refund() {
   // usando o api.get() em vez do localStorage!
 
   //serve para validar e enviar o formulário
-  function onSubmit(e: React.FormEvent) {
+   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (params.id) {
@@ -48,6 +54,15 @@ export function Refund() {
         category,
         amount: amount.replace(",", "."),
       });
+
+      //mock de arquivo para enviar no backend
+      await api.post('/refunds', {
+        name: data.name,
+        category: data.category,
+        amount: data.amount,
+        date: new Date().toISOString(),
+        filename: "1234567891028349837419374293.png",
+      });
       
 
       //vai para a página de confirmação quando o formulário é enviado com sucesso
@@ -60,6 +75,10 @@ export function Refund() {
         return alert(error.issues[0].message);
       }
 
+      if (error instanceof AxiosError) {
+        return alert(error.response?.data.message);
+      }
+
       alert("Ocorreu um erro ao enviar a solicitação");
     } finally {
       setIsLoading(false);
@@ -70,11 +89,11 @@ export function Refund() {
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const cleanValue = e.target.value.replace(/\D/g, "");
     if (!cleanValue) {
-      setValue("");
+      setAmount("");
       return;
     }
     const numberValue = Number(cleanValue) / 100;
-    setValue(formatCurrency(numberValue));
+    setAmount(formatCurrency(numberValue));
   };
 
   return (
@@ -107,9 +126,9 @@ export function Refund() {
           onChange={(e) => setCategory(e.target.value)}
           disabled={!!params.id}
         >
-          {CATEGORIES_OPTIONS.map((category) => (
-            <option key={category.name} value={category.name}>
-              {category.name}
+          {Object.entries(CATEGORIES).map(([key, value]) => (
+            <option key={key} value={key}>
+              {value.name}
             </option>
           ))}
         </Select>
@@ -119,7 +138,7 @@ export function Refund() {
           legend="Valor da despesa"
           placeholder="R$ 0,00"
           type="text"
-          value={value}
+          value={amount}
           onChange={handleValueChange}
           disabled={!!params.id}
         />
