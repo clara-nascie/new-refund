@@ -14,8 +14,6 @@ import { Button } from "@/components/Button";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { type RefundItemProps } from "@/components/RefundItem";
 
-
-
 const refundSchema = z.object({
   name: z.string().min(3, { message: "informe um nome claro para a despesa" }),
   category: z.string().min(1, { message: "Selecione uma categoria" }),
@@ -34,12 +32,8 @@ export function Refund() {
   const navigate = useNavigate();
   const params = useParams<{ id: string }>();
 
-
-  // Em breve o professor vai criar um useEffect aqui que busca os dados da API (do Back-end)
-  // usando o api.get() em vez do localStorage!
-
   //serve para validar e enviar o formulário
-   async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (params.id) {
@@ -49,6 +43,15 @@ export function Refund() {
     try {
       setIsLoading(true);
 
+      if (!file) {
+        return alert("Selecione um arquivo de comprovante");
+      }
+
+      const fileUploadForm = new FormData();
+      fileUploadForm.append("file", file);
+
+      const response = await api.post("/uploads", fileUploadForm);
+
       const data = refundSchema.parse({
         name,
         category,
@@ -56,18 +59,16 @@ export function Refund() {
       });
 
       //mock de arquivo para enviar no backend
-      await api.post('/refunds', {
+      await api.post("/refunds", {
         name: data.name,
         category: data.category,
         amount: data.amount,
         date: new Date().toISOString(),
-        filename: "1234567891028349837419374293.png",
+        filename: response.data.filename,
       });
-      
 
       //vai para a página de confirmação quando o formulário é enviado com sucesso
       navigate("/confirm", { state: { fromSubmit: true } });
-
     } catch (error) {
       console.log(error);
 
