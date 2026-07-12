@@ -3,6 +3,7 @@ import { z } from "zod";
 import { AxiosError } from "axios";
 
 import { api } from "../services/api";
+import { useAuth } from "@/hooks/useAuth";
 
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
@@ -13,6 +14,9 @@ const signInSchema = z.object({
 });
 
 export function SignIn() {
+
+  const auth = useAuth();
+
   //serve para enviar os dados para o servidor
   async function handleSignIn(prevState: any, formData: FormData) {
     const email = formData.get("email") as string;
@@ -26,6 +30,10 @@ export function SignIn() {
       });
 
       const response = await api.post("/sessions", data);
+
+      //serve para salvar os dados do usuário
+      auth.save(response.data);
+
       // Aqui nós recebemos o token e os dados do usuário, mas não damos mais console.log!
     } catch (error) {
       if (error instanceof z.ZodError) {
