@@ -1,29 +1,33 @@
-import { useState } from "react";
+import { useActionState } from "react";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
 
 export function SignIn() {
-  const [isLoading, setIsLoading] = useState(false);
+  //serve para enviar os dados para o servidor
+  async function handleSignIn(prevState: any, formData: FormData) {
+    const email = formData.get("email");
+    const password = formData.get("password");
 
-  function onAction(formData: FormData) {
-    setIsLoading(true);
-    
-    console.log(formData.get("email"), formData.get("password"));
+    console.log(email, password);
 
-    // O botão volta ao normal depois de 2s
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    // O useActionState desativa o isLoading automaticamente quando essa função termina!
+    // Então vamos apenas fazer ela "demorar" 2 segundos de propósito:
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    return { email, password };
   }
 
+  const [state, formAction, isLoading] = useActionState(handleSignIn, { email: "", password: "" });
+
   return (
-    <form action={onAction} className="w-full flex flex-col gap-4">
+    <form action={formAction} className="w-full flex flex-col gap-4">
       <Input
         name="email"
         required
         legend="email"
         type="email"
         placeholder="Digite seu e-mail"
+        defaultValue={String(state?.email)}
       />
 
       <Input
@@ -32,6 +36,7 @@ export function SignIn() {
         legend="senha"
         type="password"
         placeholder="Digite sua senha"
+        defaultValue={String(state?.password)}
       />
       <Button type="submit" isLoading={isLoading}>
         Entrar
