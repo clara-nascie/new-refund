@@ -1,8 +1,9 @@
 //nesse arquivo decidimos qual tipo de rota o usuário vai usar dependendo se está logado ou não
 
 import { BrowserRouter } from "react-router";
-
 import { Loading } from "@/components/Loading";
+
+import { useAuth } from "@/hooks/useAuth";
 
 import { AuthRoutes } from "./AuthRoutes";
 import { EmployeeRoutes } from "./EmployeeRoutes";
@@ -16,8 +17,12 @@ const session = {
   },
 };
 
-//serve para direcionar o usuário para a rota correta dependendo do tipo de usuário
 export function Routes() {
+
+  const context = useAuth();
+  console.log(context);
+  
+  //serve para direcionar o usuário para a rota correta dependendo do tipo de usuário
   function Route() {
     switch (session.user.role) {
       case "employee":
