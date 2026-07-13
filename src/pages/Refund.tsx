@@ -175,7 +175,7 @@ export function Refund() {
 
       {params.id && fileUrl ? (
         <a
-          href={fileUrl}
+          href={`http://localhost:3333/uploads/${fileUrl}`}
           target="black"
           className="text-sm text-green-100 font-semibold flex items-center
         justify-center gap-2 my-6 hover:opacity-70 transition ease-linear "
