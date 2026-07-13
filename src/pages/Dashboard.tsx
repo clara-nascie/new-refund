@@ -14,7 +14,7 @@ const PER_PAGE = 5
 export function Dashboard() {
   const [name, setName] = useState("");
   const [page, setPage] = useState(1);
-  const [totalOfPages, setTotalOfPages] = useState(0);
+  const [totalOfPages, setTotalOfPages] = useState();
   const [refunds, setRefunds] = useState<RefundItemProps[]>([]);
 
   //AQUI ESTOU FAZENDO UMA REQ DO TIPO GET PARA BUSCAR AS DESPESAS DE UM USUÁRIO
@@ -47,6 +47,11 @@ export function Dashboard() {
     }
   }
 
+  function onSubmit(e: React.FormEvent){
+   e.preventDefault()
+   FetchRefunds()
+  }
+
   function HandlePagination(action: "next" | "previous") {
     setPage((previous) => {
       if (action === "next" && previous < totalOfPages) return previous + 1;
@@ -64,7 +69,7 @@ export function Dashboard() {
     <div className="bg-gray-500 rounded-xl p-10 md:min-w-[768px]">
       <h1 className="text-gray-100 font-bold text-xl">Suas solicitações</h1>
       <form
-        onSubmit={FetchRefunds}
+        onSubmit={onSubmit}
         className="flex items-center justify-between pb-6 border-b
       border-b-gray-400 md:flex-row gap-2 mt-6"
       >

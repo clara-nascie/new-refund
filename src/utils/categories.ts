@@ -9,7 +9,7 @@ export const CATEGORIES = {
     name: "Alimentação",
     icon: food,
   },
-  transport: {
+  transportation: {
     name: "Transporte",
     icon: transport,
   },
