@@ -28,6 +28,7 @@ export function Refund() {
   const [amount, setAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
 
   const navigate = useNavigate();
   const params = useParams<{ id: string }>();
@@ -36,6 +37,7 @@ export function Refund() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
+    //serve para quando está editando, retornar para a página de dashboard
     if (params.id) {
       return navigate(-1);
     }
@@ -85,6 +87,32 @@ export function Refund() {
       setIsLoading(false);
     }
   }
+
+  async function fetchRefund(id: string) {
+    try {
+      const { data } = await api.get<RefundAPIResponse>(`/refunds/${id}`);
+
+      setName(data.name);
+      setCategory(data.category);
+      setAmount(formatCurrency(data.amount));
+      setFileUrl(data.filename)
+
+    } catch (error) {
+      console.log(error);
+
+      if (error instanceof AxiosError) {
+        alert(error.response?.data.message);
+      }
+
+      alert("Ocorreu um erro ao buscar a solicitação");
+    }
+  }
+
+  useEffect(() => {
+    if (params.id) {
+      fetchRefund(params.id);
+    }
+  }, [params.id]);
 
   //serve para formatar o valor da despesa
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,9 +173,9 @@ export function Refund() {
         />
       </div>
 
-      {params.id ? (
+      {params.id && fileUrl ? (
         <a
-          href="https://www.google.com"
+          href={fileUrl}
           target="black"
           className="text-sm text-green-100 font-semibold flex items-center
         justify-center gap-2 my-6 hover:opacity-70 transition ease-linear "
