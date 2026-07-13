@@ -14,7 +14,7 @@ const PER_PAGE = 5
 export function Dashboard() {
   const [name, setName] = useState("");
   const [page, setPage] = useState(1);
-  const [totalOfPages] = useState(0);
+  const [totalOfPages, setTotalOfPages] = useState(0);
   const [refunds, setRefunds] = useState<RefundItemProps[]>([]);
 
   //AQUI ESTOU FAZENDO UMA REQ DO TIPO GET PARA BUSCAR AS DESPESAS DE UM USUÁRIO
@@ -22,12 +22,19 @@ export function Dashboard() {
     e?.preventDefault();
 
     try {
-      const response = await api.get(
+      const response = await api.get<RefundsPaginationAPIResponse>(
         `/refunds?name=${name.trim()}&page=${page}&perPage=${PER_PAGE}`
       );
-      
-      // Usa a resposta para atualizar a tela!
-      setRefunds(response.data.refunds);
+
+      setRefunds(response.data.refunds.map((refund) => ({
+        id: refund.id,
+        name: refund.user.name,
+        description: refund.name,
+        amount: formatCurrency(refund.amount),
+        categoryImg: CATEGORIES[refund.category].icon,
+      })))
+
+      setTotalOfPages(response.data.pagination.totalPages);
       
     } catch (error) {
       console.log(error);
