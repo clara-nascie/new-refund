@@ -23,7 +23,9 @@ O roteamento da aplicação é controlado no arquivo `src/routes/index.tsx` de f
 
 O layout comum às rotas logadas é o `AppLayout.tsx` que renderiza o cabeçalho (`Header.tsx`) de forma integrada. O layout comum de autenticação é o `AuthLayout.tsx`.
 
-## 💾 Persistência Local (Simulada)
+## 🔌 Integração com API (Backend) e Autenticação
 
-Para simular o armazenamento de dados sem um back-end real, as solicitações são guardadas e atualizadas no `localStorage` do navegador sob a chave `"refunds"`. Isso permite que edições feitas pelo gerente ou novas solicitações criadas pelo colaborador persistam e reflitam instantaneamente nas páginas.
-
+A aplicação se comunica com um backend real (construído em Node.js) através do **Axios**. 
+- O estado de autenticação e os dados do usuário são gerenciados globalmente pela Context API (`AuthContext`), que armazena as credenciais (`token` e `user`) no `localStorage` do navegador para manter o usuário logado entre recarregamentos da página.
+- O Token JWT é injetado automaticamente em todas as requisições seguras da API por meio dos **Interceptors** do Axios.
+- Os uploads de arquivos (comprovantes) são processados via envio `multipart/form-data` para a rota `/uploads` do servidor antes da persistência dos dados textuais na rota `/refunds`.

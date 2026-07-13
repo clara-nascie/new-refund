@@ -1,18 +1,29 @@
-# 📚 Documentação do Projeto: new-refund
+# 📚 Documentação do Projeto: new-refund (Fullstack)
 
-### 🛠️ Stacks & Bibliotecas
+Bem-vindo ao repositório do **new-refund**. Esta é uma aplicação completa (Front-end e Back-end) para gerenciamento e solicitação de reembolsos de despesas corporativas, com suporte a upload de comprovantes, validação de dados e autenticação via JWT.
+
+### 💻 Stacks & Bibliotecas (Front-end)
 ![React 19](https://img.shields.io/badge/React_19-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vite 8](https://img.shields.io/badge/Vite_8-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 ![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS_v4-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![React Router v7](https://img.shields.io/badge/React_Router_v7-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Axios](https://img.shields.io/badge/axios-671ddf?style=for-the-badge&logo=axios&logoColor=white)
+![Zod](https://img.shields.io/badge/zod-%233068b7.svg?style=for-the-badge&logo=zod&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+
+### ⚙️ Stacks & Bibliotecas (Back-end / API)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 
 ### 📊 Distribuição de Linguagens no Repositório
 ![TypeScript](https://img.shields.io/badge/TypeScript-90%25-%23007ACC.svg?style=flat-square)
 ![HTML5](https://img.shields.io/badge/HTML5-6%25-%23E34F26.svg?style=flat-square)
 ![CSS3](https://img.shields.io/badge/CSS3-4%25-%231572B6.svg?style=flat-square)
 
-Bem-vindo ao repositório do **new-refund**. Aqui está a estrutura de arquivos para guiar você sobre a arquitetura, tecnologias e fases de desenvolvimento do projeto.
+Aqui está a estrutura de arquivos para guiar você sobre a arquitetura, tecnologias e fases de desenvolvimento do projeto.
 
 ## 🌲 Árvore de Documentação
 
