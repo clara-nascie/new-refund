@@ -51,22 +51,28 @@ class RefundsController {
     // Calcular os valores de 'skip' e 'take'
     const skip = (page - 1) * perPage
 
+    // O mesmo filtro precisa valer para a busca e para a contagem: contar sem
+    // ele fazia a paginação prometer páginas que voltavam vazias.
+    const where = {
+      user: {
+        name: {
+          contains: name.trim(),
+        },
+      },
+    }
+
     const refunds = await prisma.refunds.findMany({
       skip,
       take: perPage,
-      where: {
-        user: {
-          name: {
-            contains: name.trim(),
-          },
-        },
-      },
+      where,
       orderBy: { createdAt: "desc" },
-      include: { user: true },
+      // Só o nome. Com `include: { user: true }` a resposta levava o registro
+      // inteiro do usuário, hash da senha incluído.
+      include: { user: { select: { name: true } } },
     })
 
     // Obter o total de registros para calcular o número de páginas
-    const totalRecords = await prisma.refunds.count()
+    const totalRecords = await prisma.refunds.count({ where })
     const totalPages = Math.ceil(totalRecords / perPage)
 
     response.json({
@@ -89,8 +95,18 @@ class RefundsController {
 
     const refund = await prisma.refunds.findFirst({
       where: { id },
-      include: { user: true },
+      include: { user: { select: { name: true } } },
     })
+
+    if (!refund) {
+      throw new AppError("Reembolso não encontrado", 404)
+    }
+
+    // Estar autenticado não basta: sem conferir o dono, bastava trocar o id na
+    // URL para ler o reembolso de outra pessoa. O gestor enxerga todos.
+    if (request.user?.role !== "manager" && refund.userId !== request.user?.id) {
+      throw new AppError("Não autorizado", 403)
+    }
 
     response.json(refund)
   }
