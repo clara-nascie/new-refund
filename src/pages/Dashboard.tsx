@@ -74,7 +74,7 @@ export function Dashboard() {
       border-b-gray-400 md:flex-row gap-2 mt-6"
       >
         <Input
-          placeholder="Pequisar pelo nome"
+          placeholder="Pesquisar pelo nome"
           onChange={(e) => setName(e.target.value)}
         />
         <Button variant="icon" type="submit">
@@ -82,7 +82,7 @@ export function Dashboard() {
         </Button>
       </form>
       <div
-        className="my-6 flex flex-col gap-4 max-h-[342px]
+        className="my-6 flex flex-col gap-4 max-h-[384px]
       overflow-y-scroll"
       >
         {refunds.map((item) => (
