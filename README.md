@@ -2,6 +2,16 @@
 
 Bem-vindo ao repositório do **new-refund**. Esta é uma aplicação completa (Front-end e Back-end) para gerenciamento e solicitação de reembolsos de despesas corporativas, com suporte a upload de comprovantes, validação de dados e autenticação via JWT.
 
+## 🖼️ Telas da Aplicação
+
+| Login | Solicitação de reembolso (colaborador) |
+| :---: | :---: |
+| <img src="./DOCS/assets/login.png" alt="Tela de login" width="100%"> | <img src="./DOCS/assets/solicitacao-colaborador.png" alt="Formulário de solicitação de reembolso" width="100%"> |
+
+**Dashboard do gestor** — listagem de todas as solicitações, com busca por nome e paginação:
+
+<img src="./DOCS/assets/dashboard-gestor.png" alt="Dashboard do gestor com busca e paginação" width="100%">
+
 ### 💻 Stacks & Bibliotecas (Front-end)
 ![React 19](https://img.shields.io/badge/React_19-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vite 8](https://img.shields.io/badge/Vite_8-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
@@ -47,10 +57,10 @@ new-refund/
 ```
 
 ## 🔗 Atalhos Rápidos
-- [1. Arquitetura do Projeto](file:///c:/Users/Clara/Desktop/PROJETOS%20CLARA/new-refund/DOCS/1-arquitetura/arquitetura.md)
-- [2.1 Stacks & Ferramentas](file:///c:/Users/Clara/Desktop/PROJETOS%20CLARA/new-refund/DOCS/2-tecnologias/stacks.md)
-- [2.2 Linguagens Utilizadas](file:///c:/Users/Clara/Desktop/PROJETOS%20CLARA/new-refund/DOCS/2-tecnologias/linguagens.md)
-- [3. Fases de Desenvolvimento](file:///c:/Users/Clara/Desktop/PROJETOS%20CLARA/new-refund/DOCS/3-fases/fases.md)
-- [4. Setup e Execução](file:///c:/Users/Clara/Desktop/PROJETOS%20CLARA/new-refund/DOCS/4-setup/setup.md)
-- [5. Design e Componentes](file:///c:/Users/Clara/Desktop/PROJETOS%20CLARA/new-refund/DOCS/5-design/design.md)
-- [6. Padronização de Commits](file:///c:/Users/Clara/Desktop/PROJETOS%20CLARA/new-refund/DOCS/6-git/git.md)
+- [1. Arquitetura do Projeto](./DOCS/1-arquitetura/arquitetura.md)
+- [2.1 Stacks & Ferramentas](./DOCS/2-tecnologias/stacks.md)
+- [2.2 Linguagens Utilizadas](./DOCS/2-tecnologias/linguagens.md)
+- [3. Fases de Desenvolvimento](./DOCS/3-fases/fases.md)
+- [4. Setup e Execução](./DOCS/4-setup/setup.md)
+- [5. Design e Componentes](./DOCS/5-design/design.md)
+- [6. Padronização de Commits](./DOCS/6-git/git.md)
