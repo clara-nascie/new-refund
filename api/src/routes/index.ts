@@ -13,9 +13,9 @@ const routes = Router()
 routes.use("/users", usersRoutes)
 routes.use("/sessions", sessionsRoutes)
 
-// Rotas privadas.
-routes.use(ensureAuthenticated)
-routes.use("/refunds", refundsRoutes)
-routes.use("/uploads", uploadsRoutes)
+// Rotas privadas. O middleware entra por grupo, e nao solto no final: solto,
+// ele respondia 401 tambem para caminho inexistente, escondendo o 404.
+routes.use("/refunds", ensureAuthenticated, refundsRoutes)
+routes.use("/uploads", ensureAuthenticated, uploadsRoutes)
 
 export { routes }

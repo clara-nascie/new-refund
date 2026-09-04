@@ -14,15 +14,18 @@ function ensureAuthenticated(
   response: Response,
   next: NextFunction
 ) {
+  const authHeader = request.headers.authorization
+
+  // Fora do try: sem isso, o catch abaixo trocava "token nao enviado" por
+  // "token invalido", e quem consome a API perdia tempo procurando defeito
+  // num token que nunca chegou a existir.
+  if (!authHeader) {
+    throw new AppError("JWT token not found", 401)
+  }
+
+  const [, token] = authHeader.split(" ")
+
   try {
-    const authHeader = request.headers.authorization
-
-    if (!authHeader) {
-      throw new AppError("JWT token not found", 401)
-    }
-
-    const [, token] = authHeader.split(" ")
-
     const { role, sub: user_id } = verify(
       token,
       authConfig.jwt.secret
@@ -34,7 +37,7 @@ function ensureAuthenticated(
     }
 
     return next()
-  } catch (error) {
+  } catch {
     throw new AppError("Invalid JWT token", 401)
   }
 }
