@@ -100,5 +100,6 @@ describe("AuthContext", () => {
     //espera que o contexto de auth mostre que o usuário está deslogado
     expect(screen.getByText("Deslogada")).toBeInTheDocument();
     expect(localStorage.getItem("refund:token")).toBeNull();
+    expect(api.defaults.headers.common["Authorization"]).toBeUndefined();
   });
 });

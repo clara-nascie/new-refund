@@ -57,6 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   function signOut() {
     localStorage.removeItem(`${LOCAL_STORAGE_KEY}:user`);
     localStorage.removeItem(`${LOCAL_STORAGE_KEY}:token`);
+    delete api.defaults.headers.common["Authorization"];
     setSession(null);
   }
 
