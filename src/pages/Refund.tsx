@@ -5,14 +5,13 @@ import { AxiosError } from "axios";
 
 import { api } from "@/services/api";
 import fileSvg from "@/assets/icons/file.svg";
-import { CATEGORIES_OPTIONS, CATEGORIES } from "../utils/categories";
+import { CATEGORIES } from "../utils/categories";
 
 import { Input } from "../components/Input";
 import { Select } from "@/components/Select";
 import { Upload } from "@/components/upload";
 import { Button } from "@/components/Button";
 import { formatCurrency } from "@/utils/formatCurrency";
-import { type RefundItemProps } from "@/components/RefundItem";
 
 const refundSchema = z.object({
   name: z.string().min(3, { message: "informe um nome claro para a despesa" }),
@@ -110,7 +109,8 @@ export function Refund() {
 
   useEffect(() => {
     if (params.id) {
-      fetchRefund(params.id);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      void fetchRefund(params.id);
     }
   }, [params.id]);
 
@@ -189,7 +189,7 @@ export function Refund() {
           onChange={(e) => setFile(e.target.files?.[0] || null)}
         />
       )}
-      <Button type="submit">
+      <Button type="submit" isLoading={isLoading}>
         {params.id ? "Atualizar solicitação" : "Enviar solicitação"}
       </Button>
     </form>

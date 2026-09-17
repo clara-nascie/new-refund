@@ -14,7 +14,7 @@ const PER_PAGE = 5
 export function Dashboard() {
   const [name, setName] = useState("");
   const [page, setPage] = useState(1);
-  const [totalOfPages, setTotalOfPages] = useState();
+  const [totalOfPages, setTotalOfPages] = useState<number>(1);
   const [refunds, setRefunds] = useState<RefundItemProps[]>([]);
 
   //AQUI ESTOU FAZENDO UMA REQ DO TIPO GET PARA BUSCAR AS DESPESAS DE UM USUÁRIO
@@ -48,8 +48,8 @@ export function Dashboard() {
   }
 
   function onSubmit(e: React.FormEvent){
-   e.preventDefault()
-   FetchRefunds()
+    e.preventDefault();
+    void FetchRefunds();
   }
 
   function HandlePagination(action: "next" | "previous") {
@@ -62,7 +62,9 @@ export function Dashboard() {
 
   //carrega as despesas quando a tela é aberta
   useEffect(() => {
-    FetchRefunds(); // Dispara a função sem precisar de evento
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void FetchRefunds();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (

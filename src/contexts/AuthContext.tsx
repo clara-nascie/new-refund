@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, ReactNode } from "react";
+import { createContext, type ReactNode } from "react";
 import { useState, useEffect } from "react";
 import { api } from "../services/api";
 
@@ -50,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   //useEffect serve para carregar os dados do usuário logado caso ele já tenha feito login
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadUser();
   }, []);
 

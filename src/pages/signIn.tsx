@@ -18,7 +18,7 @@ export function SignIn() {
   const auth = useAuth();
 
   //serve para enviar os dados para o servidor
-  async function handleSignIn(prevState: any, formData: FormData) {
+  async function handleSignIn(_prevState: unknown, formData: FormData) {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
